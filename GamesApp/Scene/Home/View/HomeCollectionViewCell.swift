@@ -11,6 +11,9 @@ import SDWebImage
 class HomeCollectionViewCell: UICollectionViewCell {
     static let identifier = "HomeCollectionViewCell"
     
+    //MARK: - Properties
+    
+    
     //MARK: - İnit Methods
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -39,7 +42,7 @@ class HomeCollectionViewCell: UICollectionViewCell {
     //MARK: - UI Elements
     let gameImageView: UIImageView = {
         let imageView = UIImageView()
-        imageView.contentMode = .scaleAspectFit
+        imageView.contentMode = .scaleAspectFill
         imageView.translatesAutoresizingMaskIntoConstraints = false
         imageView.image = .checkmark
         imageView.clipsToBounds = true

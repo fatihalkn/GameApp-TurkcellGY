@@ -13,7 +13,7 @@ class HomeViewModel {
     
     
     func allGamesRequest(completion: @escaping (() -> Void)) {
-        gameService.getAllGames { result in
+        gameService.getAllGame { result in
             switch result {
             case .success(let games):
                 self.allGames = games.results

@@ -8,12 +8,17 @@
 import Foundation
 
 protocol GameService {
-    func getAllGames(completion: @escaping (Result<GamesResponseModel, Error>) -> Void)
+    func getAllGame(completion: @escaping (Result<GamesResponseModel, Error>) -> Void)
+    func getDetailGame(id: Int,completion: @escaping (Result<GameResponseDetailModel, Error>) -> Void)
 }
 
 extension NetworkService: GameService {
-    func getAllGames(completion: @escaping (Result<GamesResponseModel, Error>) -> Void) {
-        NetworkManager.shared.request(url: NetworkConstants.baseURL + NetworkEndPointHelper.shared.APIKey, method: .get, completion: completion)
+    func getDetailGame(id: Int, completion: @escaping (Result<GameResponseDetailModel, Error>) -> Void) {
+        NetworkManager.shared.request(url: NetworkEndPointHelper.shared.requestGameDetail(id: id), method: .get, completion: completion)
+    }
+    
+    func getAllGame(completion: @escaping (Result<GamesResponseModel, Error>) -> Void) {
+        NetworkManager.shared.request(url: NetworkEndPointHelper.shared.requestAllGames(APIkey: NetworkEndPointHelper.shared.APIKey), method: .get, completion: completion)
     }
     
     

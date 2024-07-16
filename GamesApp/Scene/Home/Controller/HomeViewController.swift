@@ -83,6 +83,14 @@ extension HomeViewController: UICollectionViewDelegate, UICollectionViewDataSour
         return.init(width: cellWidth, height: cellHeight)
     }
     
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        let vc = GameDetailViewController()
+        let gameID = homeViewModel.allGames[indexPath.item].id
+        vc.gameDetailViewModel.gameID = gameID
+        print(gameID)
+        navigationController?.pushViewController(vc, animated: true)
+    }
+    
     //MARK: - Configure CollectionViewHeader
     func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
         if kind == UICollectionView.elementKindSectionHeader {
@@ -93,8 +101,10 @@ extension HomeViewController: UICollectionViewDelegate, UICollectionViewDataSour
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
-        return CGSize(width: view.frame.size.width, height: view.frame.size.height / 4)
+        return CGSize(width: view.frame.size.width, height: view.frame.size.height / 4 )
     }
     
     
-}
+  }
+        
+

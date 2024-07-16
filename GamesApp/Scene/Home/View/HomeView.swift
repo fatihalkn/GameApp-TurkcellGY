@@ -10,7 +10,7 @@ import UIKit
 
 class HomeView: UIView {
     
-    //MARK: - Properties
+    
     
     //MARK: - İnit Methods
     override init(frame: CGRect) {
@@ -24,6 +24,7 @@ class HomeView: UIView {
     
     override func layoutSubviews() {
         super.layoutSubviews()
+        applyGradient(colors: [.gradiantCL1,.gradiantCL1,.gradiantCL2], startPoint: CGPoint(x: 0.5, y: 0), endPoint: CGPoint(x: 0.5, y: 1.0))
     }
     
     //MARK: - UI Elements
@@ -53,7 +54,6 @@ class HomeView: UIView {
 //MARK: - SetupUI
 extension HomeView {
     func setupUI() {
-        backgroundColor = .backgroundCL
         addSubview(homeCollectionView)
         
         NSLayoutConstraint.activate([
