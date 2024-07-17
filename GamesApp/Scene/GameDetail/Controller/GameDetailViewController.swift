@@ -14,6 +14,7 @@ class GameDetailViewController: UIViewController {
     let gameDetailViewModel = GameDetailViewModel()
     
     
+    
     override func loadView() {
         super.loadView()
         view = gameDetailView
@@ -22,6 +23,8 @@ class GameDetailViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         requestGameDetail()
+        addTargert()
+        ifHaveFavoritesGames()
     }
     
     func requestGameDetail() {
@@ -31,6 +34,35 @@ class GameDetailViewController: UIViewController {
         }
     }
     
+    func addTargert() {
+        gameDetailView.bookMarkButton.addTarget(self, action: #selector(tappedBookMarkButton), for: .touchUpInside)
+    }
     
+    @objc func tappedBookMarkButton() {
+        let gameID = Int32(gameDetailViewModel.gameID ?? 0)
+        if CoreDataManager.shared.isFavorite(gameID: gameID) {
+            CoreDataManager.shared.deleteGame(gameID: gameID)
+            gameDetailView.bookMarkButton.setImage(UIImage(systemName: "bookmark"), for: .normal)
+            gameDetailView.bookMarkButton.tintColor = .white
+        } else {
+            CoreDataManager.shared.saveGame(gameID: gameID)
+            gameDetailView.bookMarkButton.setImage(UIImage(systemName: "bookmark.fill"), for: .normal)
+            gameDetailView.bookMarkButton.tintColor = .red
+        }
+    }
+    
+    func ifHaveFavoritesGames() {
+        let gameID = Int32(gameDetailViewModel.gameID ?? 0)
+        
+        if CoreDataManager.shared.isFavorite(gameID: gameID) {
+            gameDetailView.bookMarkButton.tintColor = .red
+            gameDetailView.bookMarkButton.setImage(UIImage(systemName: "bookmark.fill"), for: .normal)
+        } else {
+            gameDetailView.bookMarkButton.tintColor = .white
+            gameDetailView.bookMarkButton.setImage(UIImage(systemName: "bookmark"), for: .normal)
+        }
+
+    }
+  
 }
 

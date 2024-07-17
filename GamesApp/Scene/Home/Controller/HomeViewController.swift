@@ -59,7 +59,8 @@ extension HomeViewController: UISearchResultsUpdating  {
     }
     
     func updateSearchResults(for searchController: UISearchController) {
-        //
+        self.homeViewModel.updateSearchController(searchBarText: searchController.searchBar.text)
+        self.homeView.homeCollectionView.reloadData()
     }
 }
 
@@ -67,12 +68,14 @@ extension HomeViewController: UISearchResultsUpdating  {
 //MARK: - Configure CollectionView
 extension HomeViewController: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return homeViewModel.allGames.count
+        let inSearchMode = self.homeViewModel.inSearchModel(homeView.searchBar)
+        return inSearchMode ? self.homeViewModel.filterAllGames.count : self.homeViewModel.allGames.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: HomeCollectionViewCell.identifier, for: indexPath) as! HomeCollectionViewCell
-        let model = homeViewModel.allGames[indexPath.item]
+        let inSearchMode = self.homeViewModel.inSearchModel(homeView.searchBar)
+        let model = inSearchMode ? self.homeViewModel.filterAllGames[indexPath.item] : self.homeViewModel.allGames[indexPath.item]
         cell.configure(model: model)
         return cell
     }
@@ -87,6 +90,7 @@ extension HomeViewController: UICollectionViewDelegate, UICollectionViewDataSour
         let vc = GameDetailViewController()
         let gameID = homeViewModel.allGames[indexPath.item].id
         vc.gameDetailViewModel.gameID = gameID
+        vc.gameDetailViewModel.indePath = indexPath
         print(gameID)
         navigationController?.pushViewController(vc, animated: true)
     }

@@ -7,10 +7,12 @@
 
 import Foundation
 
+
 class GameDetailViewModel {
     var gameService: GameService = NetworkService()
     var gameDetail: GameResponseDetailModel?
     var gameID: Int?
+    var indePath: IndexPath?
     
     func detailGamesRequest(completion: @escaping (() -> Void)) {
         guard let gameID = self.gameID else { return}

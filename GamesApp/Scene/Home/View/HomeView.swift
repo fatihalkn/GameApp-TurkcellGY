@@ -32,6 +32,7 @@ class HomeView: UIView {
         let searchBar = UISearchController(searchResultsController: nil)
         searchBar.obscuresBackgroundDuringPresentation = false
         searchBar.hidesNavigationBarDuringPresentation = true
+        searchBar.searchBar.barTintColor = .clear
         searchBar.searchBar.backgroundColor = .clear
         searchBar.searchBar.backgroundImage = UIImage()
         searchBar.searchBar.placeholder = "Search Games"

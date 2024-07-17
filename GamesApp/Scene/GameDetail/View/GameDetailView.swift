@@ -18,6 +18,11 @@ class GameDetailView: UIView {
 
     }
     
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        applyGradient(colors: [.gradiantCL1,.gradiantCL1,.gradiantCL2], startPoint: CGPoint(x: 0.5, y: 0), endPoint: CGPoint(x: 0.5, y: 1.0))
+    }
+    
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
@@ -44,9 +49,18 @@ class GameDetailView: UIView {
         let imageView = UIImageView()
         imageView.contentMode = .scaleAspectFit
         imageView.translatesAutoresizingMaskIntoConstraints = false
-        imageView.image = UIImage(systemName: "star.circle.fill")
+        imageView.image = UIImage(systemName: "star.fill")
+        imageView.tintColor = .rateCL
         imageView.clipsToBounds = true
         return imageView
+    }()
+    
+    let bookMarkButton: UIButton = {
+        let button = UIButton()
+        button.translatesAutoresizingMaskIntoConstraints = false
+        button.setImage(UIImage(systemName: "bookmark"), for: .normal)
+        button.tintColor = .white
+        return button
     }()
     
     let rateLabel: UILabel = {
@@ -89,6 +103,7 @@ class GameDetailView: UIView {
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
+
     
 }
 
@@ -106,6 +121,7 @@ extension GameDetailView {
             contentView.addSubview(rateImageView)
             contentView.addSubview(gameNameLabel)
             contentView.addSubview(gameDescriptionLabel)
+            contentView.addSubview(bookMarkButton)
             
             NSLayoutConstraint.activate([
                 scrollView.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor),
@@ -130,6 +146,11 @@ extension GameDetailView {
                 
                 rateImageView.topAnchor.constraint(equalTo: gameNameLabel.bottomAnchor, constant: 8),
                 rateImageView.leadingAnchor.constraint(greaterThanOrEqualTo: contentView.leadingAnchor, constant: 16),
+                
+                bookMarkButton.topAnchor.constraint(equalTo: gameNameLabel.bottomAnchor, constant: 8),
+                bookMarkButton.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -16),
+                bookMarkButton.bottomAnchor.constraint(equalTo: gameDescriptionLabel.topAnchor, constant: -16),
+                
                
                 rateLabel.topAnchor.constraint(equalTo: gameNameLabel.bottomAnchor, constant: 8),
                 rateLabel.leadingAnchor.constraint(equalTo: rateImageView.trailingAnchor,constant: 10),

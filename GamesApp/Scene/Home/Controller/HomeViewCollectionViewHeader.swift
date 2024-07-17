@@ -75,7 +75,7 @@ class HomeViewCollectionViewHeader: UICollectionReusableView {
     
     let headerPageController: UIPageControl = {
         let pageControl = UIPageControl()
-        pageControl.pageIndicatorTintColor = .link
+        pageControl.pageIndicatorTintColor = .black
         pageControl.translatesAutoresizingMaskIntoConstraints = false
         return pageControl
     }()
@@ -104,10 +104,8 @@ extension HomeViewCollectionViewHeader: UICollectionViewDelegate, UICollectionVi
         let cellHight: CGFloat = collectionView.frame.height
         return(.init(width: cellWidth, height: cellHight))
     }
-    
-    
-}
 
+}
 
 //MARK: - PageController Configure
 extension HomeViewCollectionViewHeader {

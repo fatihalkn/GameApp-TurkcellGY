@@ -1,16 +1,14 @@
 //
-//  HomeCollectionViewCell.swift
+//  FavoriteCollectionViewCell.swift
 //  GamesApp
 //
-//  Created by Fatih on 15.07.2024.
+//  Created by Fatih on 17.07.2024.
 //
 
 import UIKit
-import SDWebImage
 
-class HomeCollectionViewCell: UICollectionViewCell {
-    static let identifier = "HomeCollectionViewCell"
-    
+class FavoriteCollectionViewCell: UICollectionViewCell {
+    static let identifier = "FavoriteCollectionViewCell"
     //MARK: - Properties
     
     
@@ -30,7 +28,7 @@ class HomeCollectionViewCell: UICollectionViewCell {
         gameImageView.layer.masksToBounds = true
     }
     
-    func configure(model: GameResult) {
+    func configure(model: GameResponseDetailModel) {
         guard let imageURL = URL(string: model.backgroundImage) else {
             print("GEÇERSİZ URL: \(model.backgroundImage)")
             return
@@ -83,7 +81,7 @@ class HomeCollectionViewCell: UICollectionViewCell {
 }
 
 //MARK: -  SetupUI
-extension HomeCollectionViewCell {
+extension FavoriteCollectionViewCell {
     func setupUI() {
         addSubview(gameImageView)
         addSubview(rateImageView)
@@ -112,5 +110,7 @@ extension HomeCollectionViewCell {
         ])
     }
 }
+
+
 
 
