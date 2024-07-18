@@ -87,9 +87,11 @@ class FavoriteView: UIView {
             emptyStackView.heightAnchor.constraint(equalToConstant: 100),
             emptyStackView.widthAnchor.constraint(equalTo: favoriteCollectionView.widthAnchor, multiplier: 0.8)
         ])
+        emptyStackView.isHidden = false
     }
     
     func hiddenEmptyLabel() {
+        emptyStackView.removeFromSuperview()
         emptyStackView.isHidden = true
     }
 }

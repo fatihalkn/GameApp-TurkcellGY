@@ -6,16 +6,22 @@
 //
 
 import UIKit
-
+protocol FavoriteCollectionViewCellProtocol {
+    func didTappedİnfoButton(indexPath: IndexPath)
+    func didTappedDeleteButton(indexPath: IndexPath)
+}
 class FavoriteCollectionViewCell: UICollectionViewCell {
     static let identifier = "FavoriteCollectionViewCell"
     //MARK: - Properties
-    
+    var favoriteCollectionViewCellDelegate: FavoriteCollectionViewCellProtocol?
+    var indexPath : IndexPath?
     
     //MARK: - İnit Methods
     override init(frame: CGRect) {
         super.init(frame: frame)
         setupUI()
+        configureTargets()
+        
     }
     
     required init?(coder: NSCoder) {
@@ -28,6 +34,7 @@ class FavoriteCollectionViewCell: UICollectionViewCell {
         gameImageView.layer.masksToBounds = true
     }
     
+    
     func configure(model: GameResponseDetailModel) {
         guard let imageURL = URL(string: model.backgroundImage) else {
             print("GEÇERSİZ URL: \(model.backgroundImage)")
@@ -37,6 +44,21 @@ class FavoriteCollectionViewCell: UICollectionViewCell {
         gameNameLabel.text = model.name
         rateLabel.text = "\(model.rating)"
         gameImageView.sd_setImage(with: imageURL,placeholderImage: nil)
+    }
+    
+    func configureTargets() {
+        infoGameButton.addTarget(self, action: #selector(infoButtonTapped), for: .touchUpInside)
+        deleteGameButton.addTarget(self, action: #selector(deleteButtonTapped), for: .touchUpInside)
+    }
+    
+    @objc func deleteButtonTapped() {
+        guard let indexPath = self.indexPath else { return }
+        favoriteCollectionViewCellDelegate?.didTappedDeleteButton(indexPath: indexPath)
+    }
+    
+    @objc func infoButtonTapped() {
+        guard let indexPath = self.indexPath else { return }
+        favoriteCollectionViewCellDelegate?.didTappedİnfoButton(indexPath: indexPath)
     }
     
     //MARK: - UI Elements
@@ -77,6 +99,32 @@ class FavoriteCollectionViewCell: UICollectionViewCell {
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
+    
+    let infoGameButton: UIButton = {
+        let button = UIButton()
+        button.translatesAutoresizingMaskIntoConstraints = false
+        button.setImage(.infoButton, for: .normal)
+        button.tintColor = .white
+        return button
+    }()
+    
+    let deleteGameButton: UIButton = {
+        let button = UIButton()
+        button.translatesAutoresizingMaskIntoConstraints = false
+        button.setImage(.deleteButton, for: .normal)
+        button.tintColor = .white
+        return button
+    }()
+    
+    let deleteAndİnfoButtonStackView: UIStackView = {
+        let stackView = UIStackView()
+        stackView.axis = .vertical
+        stackView.distribution = .fillProportionally
+        stackView.spacing = 8
+        stackView.translatesAutoresizingMaskIntoConstraints = false
+        stackView.backgroundColor = .clear
+        return stackView
+    }()
   
 }
 
@@ -87,6 +135,9 @@ extension FavoriteCollectionViewCell {
         addSubview(rateImageView)
         addSubview(rateLabel)
         addSubview(gameNameLabel)
+        addSubview(deleteAndİnfoButtonStackView)
+        deleteAndİnfoButtonStackView.addArrangedSubview(infoGameButton)
+        deleteAndİnfoButtonStackView.addArrangedSubview(deleteGameButton)
         
         NSLayoutConstraint.activate([
             gameImageView.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor),
@@ -107,6 +158,22 @@ extension FavoriteCollectionViewCell {
             rateLabel.centerYAnchor.constraint(equalTo: rateImageView.centerYAnchor),
             rateLabel.leadingAnchor.constraint(equalTo: rateImageView.trailingAnchor,constant: 10),
             rateLabel.trailingAnchor.constraint(lessThanOrEqualTo: safeAreaLayoutGuide.trailingAnchor, constant: -50),
+            
+            deleteAndİnfoButtonStackView.topAnchor.constraint(equalTo: rateLabel.topAnchor),
+            deleteAndİnfoButtonStackView.trailingAnchor.constraint(equalTo: safeAreaLayoutGuide.trailingAnchor,constant: -20),
+            deleteAndİnfoButtonStackView.bottomAnchor.constraint(equalTo: safeAreaLayoutGuide.bottomAnchor),
+            deleteAndİnfoButtonStackView.leadingAnchor.constraint(greaterThanOrEqualTo: rateLabel.trailingAnchor, constant: 50),
+            
+            deleteGameButton.widthAnchor.constraint(equalToConstant: 30),
+            deleteGameButton.heightAnchor.constraint(equalToConstant: 30),
+            
+            infoGameButton.widthAnchor.constraint(equalToConstant: 30),
+            infoGameButton.heightAnchor.constraint(equalToConstant: 30),
+            
+            
+            
+            
+            
         ])
     }
 }

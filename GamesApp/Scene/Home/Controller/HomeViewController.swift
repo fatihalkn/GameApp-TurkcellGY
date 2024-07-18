@@ -90,8 +90,7 @@ extension HomeViewController: UICollectionViewDelegate, UICollectionViewDataSour
         let vc = GameDetailViewController()
         let gameID = homeViewModel.allGames[indexPath.item].id
         vc.gameDetailViewModel.gameID = gameID
-        vc.gameDetailViewModel.indePath = indexPath
-        print(gameID)
+        vc.gameDetailViewModel.indexPath = indexPath
         navigationController?.pushViewController(vc, animated: true)
     }
     

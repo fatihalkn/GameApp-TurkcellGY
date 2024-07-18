@@ -32,10 +32,8 @@ class FavoriteController: UIViewController {
         super.viewWillAppear(animated)
         fetchCoreDataGames()
         requestFavoriteGames()
-        self.upDateEmptyLabelVisibility()
-
     }
-    
+  
     
     func setupRegister() {
         favoriteView.favoriteCollectionView.register(FavoriteCollectionViewCell.self, forCellWithReuseIdentifier: FavoriteCollectionViewCell.identifier)
@@ -44,18 +42,18 @@ class FavoriteController: UIViewController {
     func setupDelegate() {
         favoriteView.favoriteCollectionView.dataSource = self
         favoriteView.favoriteCollectionView.delegate = self
+        
+        favoriteViewModel.favoriteViewModelDelegate = self
     }
     
     func fetchCoreDataGames() {
         favoriteViewModel.fetchGames()
-        upDateEmptyLabelVisibility()
     }
     
     func requestFavoriteGames() {
         favoriteViewModel.favoriteGamesRequest {
-            self.favoriteView.favoriteCollectionView.reloadData()
             self.upDateEmptyLabelVisibility()
-
+            self.favoriteView.favoriteCollectionView.reloadData()
         }
     }
     
@@ -71,7 +69,8 @@ class FavoriteController: UIViewController {
 //MARK: -  SearchBar Configure
 extension FavoriteController: UISearchResultsUpdating  {
     func updateSearchResults(for searchController: UISearchController) {
-        //
+        self.favoriteViewModel.updateSearchController(searchBarText: searchController.searchBar.text)
+        self.favoriteView.favoriteCollectionView.reloadData()
     }
     
     func setupSearchController() {
@@ -86,12 +85,16 @@ extension FavoriteController: UISearchResultsUpdating  {
 
 extension FavoriteController: UICollectionViewDelegate,UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return favoriteViewModel.gameDetails.count
+        let inSearchMode = self.favoriteViewModel.inSearchModel(favoriteView.searchBar)
+        return inSearchMode ? self.favoriteViewModel.filterGames.count : self.favoriteViewModel.gameDetails.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: FavoriteCollectionViewCell.identifier, for: indexPath) as! FavoriteCollectionViewCell
-        let model = favoriteViewModel.gameDetails[indexPath.item]
+        let inSearchMode = self.favoriteViewModel.inSearchModel(favoriteView.searchBar)
+        let model = inSearchMode ? self.favoriteViewModel.filterGames[indexPath.item] : self.favoriteViewModel.gameDetails[indexPath.item]
+        cell.favoriteCollectionViewCellDelegate = self
+        cell.indexPath = indexPath
         cell.configure(model: model)
         return cell
     }
@@ -106,8 +109,45 @@ extension FavoriteController: UICollectionViewDelegate,UICollectionViewDataSourc
         let vc = GameDetailViewController()
         let gameID = favoriteViewModel.gameDetails[indexPath.item].id
         vc.gameDetailViewModel.gameID = gameID
-        vc.gameDetailViewModel.indePath = indexPath
-        print(gameID)
+        vc.gameDetailViewModel.indexPath = indexPath
         navigationController?.pushViewController(vc, animated: true)
     }
+}
+
+//MARK: - FavoriteCollectionViewCellProtocol
+extension FavoriteController: FavoriteCollectionViewCellProtocol {
+    func didTappedDeleteButton(indexPath: IndexPath) {
+        let gameID = favoriteViewModel.gameDetails[indexPath.item].id
+        CoreDataManager.shared.deleteGame(gameID: Int32(gameID))
+        favoriteViewModel.gameDetails.remove(at: indexPath.item)
+        favoriteView.favoriteCollectionView.reloadData()
+
+    }
+    
+    func didTappedİnfoButton(indexPath: IndexPath) {
+        let vc = GameDetailViewController()
+        let gameID = favoriteViewModel.gameDetails[indexPath.item].id
+        vc.gameDetailViewModel.gameID = gameID
+        vc.gameDetailViewModel.indexPath = indexPath
+        navigationController?.pushViewController(vc, animated: true)
+    }
+    
+    
+  
+    
+    
+}
+
+
+//MARK: - FavoriteViewModelProtocl
+extension FavoriteController: FavoriteViewModelProtocol {
+    func showLoading() {
+        favoriteView.showLoading(text: nil, interaction: false)
+    }
+    
+    func removeLoading() {
+        favoriteView.removeLoading()
+    }
+    
+    
 }

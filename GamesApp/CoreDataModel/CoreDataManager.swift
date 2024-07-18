@@ -26,7 +26,6 @@ class CoreDataManager {
         
         do {
             try  self.context.save()
-            print(gameID)
         } catch {
             print("ERROR: \(error.localizedDescription)")
         }

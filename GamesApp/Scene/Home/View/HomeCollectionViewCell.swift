@@ -28,6 +28,12 @@ class HomeCollectionViewCell: UICollectionViewCell {
         super.layoutSubviews()
         gameImageView.layer.cornerRadius = 16
         gameImageView.layer.masksToBounds = true
+        
+        gameTypeContentView.applyGradient(colors: [.tabCL1, .tabCL2], startPoint: CGPoint(x: 0.5, y: 0), endPoint: CGPoint(x: 1.0, y: 1.0))
+        
+        gameTypeContentView.layer.cornerRadius = gameTypeContentView.frame.height / 2
+        gameTypeContentView.layer.masksToBounds = true
+        
     }
     
     func configure(model: GameResult) {
@@ -35,9 +41,10 @@ class HomeCollectionViewCell: UICollectionViewCell {
             print("GEÇERSİZ URL: \(model.backgroundImage)")
             return
         }
-        
+    
         gameNameLabel.text = model.name
         rateLabel.text = "\(model.rating)"
+        gameTypeLabel.text = model.genres.first?.name
         gameImageView.sd_setImage(with: imageURL,placeholderImage: nil)
     }
     
@@ -79,6 +86,24 @@ class HomeCollectionViewCell: UICollectionViewCell {
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
+    
+    let gameTypeLabel: UILabel = {
+        let label = UILabel()
+        label.font = .systemFont(ofSize: 15, weight: .semibold)
+        label.textColor = .black
+        label.textAlignment = .center
+        label.numberOfLines = 2
+        label.translatesAutoresizingMaskIntoConstraints = false
+        return label
+    }()
+    
+    let gameTypeContentView: UIView = {
+        let view = UIView()
+        view.translatesAutoresizingMaskIntoConstraints = false
+        return view
+    }()
+    
+    
   
 }
 
@@ -89,6 +114,8 @@ extension HomeCollectionViewCell {
         addSubview(rateImageView)
         addSubview(rateLabel)
         addSubview(gameNameLabel)
+        addSubview(gameTypeContentView)
+        gameTypeContentView.addSubview(gameTypeLabel)
         
         NSLayoutConstraint.activate([
             gameImageView.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor),
@@ -109,6 +136,18 @@ extension HomeCollectionViewCell {
             rateLabel.centerYAnchor.constraint(equalTo: rateImageView.centerYAnchor),
             rateLabel.leadingAnchor.constraint(equalTo: rateImageView.trailingAnchor,constant: 10),
             rateLabel.trailingAnchor.constraint(lessThanOrEqualTo: safeAreaLayoutGuide.trailingAnchor, constant: -50),
+            
+            gameTypeContentView.topAnchor.constraint(equalTo: rateLabel.topAnchor),
+            gameTypeContentView.trailingAnchor.constraint(equalTo: safeAreaLayoutGuide.trailingAnchor,constant: -20),
+            gameTypeContentView.widthAnchor.constraint(equalToConstant: 100),
+            gameTypeContentView.heightAnchor.constraint(equalToConstant: 50),
+            
+            
+            
+            gameTypeLabel.centerYAnchor.constraint(equalTo: gameTypeContentView.centerYAnchor),
+            gameTypeLabel.centerXAnchor.constraint(equalTo: gameTypeContentView.centerXAnchor),
+            gameTypeLabel.heightAnchor.constraint(equalTo: gameTypeContentView.heightAnchor),
+            gameTypeLabel.widthAnchor.constraint(equalTo: gameTypeContentView.widthAnchor)
         ])
     }
 }

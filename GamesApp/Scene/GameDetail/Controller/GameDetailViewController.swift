@@ -7,11 +7,13 @@
 
 import Foundation
 import UIKit
+import AVKit
 
 class GameDetailViewController: UIViewController {
     
     let gameDetailView = GameDetailView()
     let gameDetailViewModel = GameDetailViewModel()
+    
     
     
     
@@ -23,8 +25,10 @@ class GameDetailViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         requestGameDetail()
+        requestGameMovies()
         addTargert()
         ifHaveFavoritesGames()
+        gameDetailView.gamedetailViewDelegate = self
     }
     
     func requestGameDetail() {
@@ -32,6 +36,15 @@ class GameDetailViewController: UIViewController {
             guard let gameDetailModel = self.gameDetailViewModel.gameDetail else { return }
             self.gameDetailView.configure(model: gameDetailModel)
         }
+        
+    }
+    
+    func requestGameMovies() {
+        gameDetailViewModel.getGameMoviesRequest {
+           
+        }
+        
+        
     }
     
     func addTargert() {
@@ -64,5 +77,23 @@ class GameDetailViewController: UIViewController {
 
     }
   
+}
+
+//MARK: - AVPlayerViewControllerDelegate
+extension GameDetailViewController: AVPlayerViewControllerDelegate {
+}
+
+//MARK: - GameDetailViewProtocol
+extension GameDetailViewController: GameDetailViewProtocol {
+    func didTappedPlayButton() {
+        let url = self.gameDetailViewModel.gameMovie
+        let player = AVPlayer(url: URL(string: url.first ?? "URL GELMEDİ")!)
+        self.gameDetailView.playerController.player = player
+        self.gameDetailView.playerController.allowsPictureInPicturePlayback = true
+        self.gameDetailView.playerController.delegate = self
+        self.present(gameDetailView.playerController, animated: true)
+    }
+    
+    
 }
 
