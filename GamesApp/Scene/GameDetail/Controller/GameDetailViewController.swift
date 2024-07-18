@@ -29,6 +29,7 @@ class GameDetailViewController: UIViewController {
         addTargert()
         ifHaveFavoritesGames()
         gameDetailView.gamedetailViewDelegate = self
+        self.navigationController?.navigationBar.tintColor = UIColor.white
     }
     
     func requestGameDetail() {
@@ -41,7 +42,7 @@ class GameDetailViewController: UIViewController {
     
     func requestGameMovies() {
         gameDetailViewModel.getGameMoviesRequest {
-           
+            
         }
         
         
@@ -74,9 +75,9 @@ class GameDetailViewController: UIViewController {
             gameDetailView.bookMarkButton.tintColor = .white
             gameDetailView.bookMarkButton.setImage(UIImage(systemName: "bookmark"), for: .normal)
         }
-
+        
     }
-  
+    
 }
 
 //MARK: - AVPlayerViewControllerDelegate
@@ -86,8 +87,12 @@ extension GameDetailViewController: AVPlayerViewControllerDelegate {
 //MARK: - GameDetailViewProtocol
 extension GameDetailViewController: GameDetailViewProtocol {
     func didTappedPlayButton() {
-        let url = self.gameDetailViewModel.gameMovie
-        let player = AVPlayer(url: URL(string: url.first ?? "URL GELMEDİ")!)
+        guard let urlString = self.gameDetailViewModel.gameMovie.first,
+              let url = URL(string: urlString) else {
+            gameDetailView.showError(text: "The Trailer of this game is Unavailable, please try again later.", image: nil, interaction: false, delay: 1.5)
+            return
+        }
+        let player = AVPlayer(url: url)
         self.gameDetailView.playerController.player = player
         self.gameDetailView.playerController.allowsPictureInPicturePlayback = true
         self.gameDetailView.playerController.delegate = self

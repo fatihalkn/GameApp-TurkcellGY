@@ -23,6 +23,7 @@ class HomeViewController: UIViewController {
         allGamesRequest()
         setupRegister()
         setupDelegate()
+        self.navigationController?.navigationBar.tintColor = UIColor.white
         
     }
     

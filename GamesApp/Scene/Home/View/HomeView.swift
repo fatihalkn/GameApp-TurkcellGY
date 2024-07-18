@@ -61,7 +61,7 @@ extension HomeView {
             homeCollectionView.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor),
             homeCollectionView.leadingAnchor.constraint(equalTo: safeAreaLayoutGuide.leadingAnchor),
             homeCollectionView.trailingAnchor.constraint(equalTo: safeAreaLayoutGuide.trailingAnchor),
-            homeCollectionView.bottomAnchor.constraint(equalTo: safeAreaLayoutGuide.bottomAnchor)
+            homeCollectionView.bottomAnchor.constraint(equalTo: safeAreaLayoutGuide.bottomAnchor,constant: -15)
         ])
     }
 }

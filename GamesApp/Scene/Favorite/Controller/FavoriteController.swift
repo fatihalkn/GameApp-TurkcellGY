@@ -20,6 +20,7 @@ class FavoriteController: UIViewController {
         setupDelegate()
         setupRegister()
         setupSearchController()
+        self.navigationController?.navigationBar.tintColor = UIColor.white
         
     }
     

@@ -65,7 +65,6 @@ class GameDetailView: UIView {
         let imageView = UIImageView()
         imageView.contentMode = .scaleAspectFill
         imageView.translatesAutoresizingMaskIntoConstraints = false
-        imageView.image = .checkmark
         imageView.clipsToBounds = true
         return imageView
     }()

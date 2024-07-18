@@ -124,8 +124,7 @@ class FavoriteCollectionViewCell: UICollectionViewCell {
         stackView.translatesAutoresizingMaskIntoConstraints = false
         stackView.backgroundColor = .clear
         return stackView
-    }()
-  
+    }()  
 }
 
 //MARK: -  SetupUI

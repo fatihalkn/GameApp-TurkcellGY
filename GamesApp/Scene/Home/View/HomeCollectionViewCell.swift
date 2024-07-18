@@ -140,7 +140,7 @@ extension HomeCollectionViewCell {
             gameTypeContentView.topAnchor.constraint(equalTo: rateLabel.topAnchor),
             gameTypeContentView.trailingAnchor.constraint(equalTo: safeAreaLayoutGuide.trailingAnchor,constant: -20),
             gameTypeContentView.widthAnchor.constraint(equalToConstant: 100),
-            gameTypeContentView.heightAnchor.constraint(equalToConstant: 50),
+            gameTypeContentView.heightAnchor.constraint(equalToConstant: 30),
             
             
             
