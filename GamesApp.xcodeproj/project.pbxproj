@@ -19,6 +19,7 @@
 		3D5E78C62C4949F800639EB9 /* ProgressHUD in Frameworks */ = {isa = PBXBuildFile; productRef = 3D5E78C52C4949F800639EB9 /* ProgressHUD */; };
 		3D5E78C82C494A1100639EB9 /* ProgresHUD.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D5E78C72C494A1100639EB9 /* ProgresHUD.swift */; };
 		3D5E78CD2C49637900639EB9 /* GameMoviesResponseModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D5E78CC2C49637900639EB9 /* GameMoviesResponseModel.swift */; };
+		3D5E78D02C49E92200639EB9 /* SCLAlertView in Frameworks */ = {isa = PBXBuildFile; productRef = 3D5E78CF2C49E92200639EB9 /* SCLAlertView */; };
 		3DF7D6822C454FF700C950AD /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DF7D6812C454FF700C950AD /* AppDelegate.swift */; };
 		3DF7D6842C454FF700C950AD /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DF7D6832C454FF700C950AD /* SceneDelegate.swift */; };
 		3DF7D6892C454FF700C950AD /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3DF7D6872C454FF700C950AD /* Main.storyboard */; };
@@ -87,6 +88,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				3D5E78C62C4949F800639EB9 /* ProgressHUD in Frameworks */,
+				3D5E78D02C49E92200639EB9 /* SCLAlertView in Frameworks */,
 				3DF7D6BE2C45AFD300C950AD /* SDWebImage in Frameworks */,
 				3DF7D6AD2C45563C00C950AD /* Alamofire in Frameworks */,
 			);
@@ -347,6 +349,7 @@
 				3DF7D6AC2C45563C00C950AD /* Alamofire */,
 				3DF7D6BD2C45AFD300C950AD /* SDWebImage */,
 				3D5E78C52C4949F800639EB9 /* ProgressHUD */,
+				3D5E78CF2C49E92200639EB9 /* SCLAlertView */,
 			);
 			productName = GamesApp;
 			productReference = 3DF7D67E2C454FF700C950AD /* GamesApp.app */;
@@ -380,6 +383,7 @@
 				3DF7D6AB2C45563C00C950AD /* XCRemoteSwiftPackageReference "Alamofire" */,
 				3DF7D6BC2C45AFD300C950AD /* XCRemoteSwiftPackageReference "SDWebImage" */,
 				3D5E78C42C4949F800639EB9 /* XCRemoteSwiftPackageReference "ProgressHUD" */,
+				3D5E78CE2C49E92200639EB9 /* XCRemoteSwiftPackageReference "SCLAlertView-Swift" */,
 			);
 			productRefGroup = 3DF7D67F2C454FF700C950AD /* Products */;
 			projectDirPath = "";
@@ -661,6 +665,14 @@
 				minimumVersion = 14.1.3;
 			};
 		};
+		3D5E78CE2C49E92200639EB9 /* XCRemoteSwiftPackageReference "SCLAlertView-Swift" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/vikmeup/SCLAlertView-Swift.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 0.8.2;
+			};
+		};
 		3DF7D6AB2C45563C00C950AD /* XCRemoteSwiftPackageReference "Alamofire" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/Alamofire/Alamofire";
@@ -684,6 +696,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 3D5E78C42C4949F800639EB9 /* XCRemoteSwiftPackageReference "ProgressHUD" */;
 			productName = ProgressHUD;
+		};
+		3D5E78CF2C49E92200639EB9 /* SCLAlertView */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 3D5E78CE2C49E92200639EB9 /* XCRemoteSwiftPackageReference "SCLAlertView-Swift" */;
+			productName = SCLAlertView;
 		};
 		3DF7D6AC2C45563C00C950AD /* Alamofire */ = {
 			isa = XCSwiftPackageProductDependency;

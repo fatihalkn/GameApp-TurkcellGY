@@ -19,6 +19,15 @@
       }
     },
     {
+      "identity" : "sclalertview-swift",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/vikmeup/SCLAlertView-Swift.git",
+      "state" : {
+        "revision" : "a36c9258dc623f368753a17d4bea4e0a751bc02f",
+        "version" : "0.8.2"
+      }
+    },
+    {
       "identity" : "sdwebimage",
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/SDWebImage/SDWebImage",

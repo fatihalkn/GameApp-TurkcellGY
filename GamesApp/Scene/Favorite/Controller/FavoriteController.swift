@@ -7,6 +7,7 @@
 
 import Foundation
 import UIKit
+import SCLAlertView
 
 class FavoriteController: UIViewController {
     
@@ -25,7 +26,7 @@ class FavoriteController: UIViewController {
     }
     
     override func loadView() {
-         super.loadView()
+        super.loadView()
         view = favoriteView
     }
     
@@ -34,7 +35,7 @@ class FavoriteController: UIViewController {
         fetchCoreDataGames()
         requestFavoriteGames()
     }
-  
+    
     
     func setupRegister() {
         favoriteView.favoriteCollectionView.register(FavoriteCollectionViewCell.self, forCellWithReuseIdentifier: FavoriteCollectionViewCell.identifier)
@@ -118,12 +119,26 @@ extension FavoriteController: UICollectionViewDelegate,UICollectionViewDataSourc
 //MARK: - FavoriteCollectionViewCellProtocol
 extension FavoriteController: FavoriteCollectionViewCellProtocol {
     func didTappedDeleteButton(indexPath: IndexPath) {
-        let gameID = favoriteViewModel.gameDetails[indexPath.item].id
-        CoreDataManager.shared.deleteGame(gameID: Int32(gameID))
-        favoriteViewModel.gameDetails.remove(at: indexPath.item)
-        favoriteView.favoriteCollectionView.reloadData()
-
-    }
+           let gameID = favoriteViewModel.gameDetails[indexPath.item].id
+           
+           let alertView = SCLAlertView()
+           alertView.addButton("Delete", backgroundColor: .red, textColor: .white) {
+               CoreDataManager.shared.deleteGame(gameID: Int32(gameID))
+               self.favoriteViewModel.gameDetails.remove(at: indexPath.item)
+               self.favoriteView.favoriteCollectionView.reloadData()
+               self.upDateEmptyLabelVisibility()
+               
+               let successAlert = SCLAlertView()
+               let alert = successAlert.showSuccess("Deleted", subTitle: "The game has been deleted successfully.")
+               
+               DispatchQueue.main.asyncAfter(deadline: .now() + 5) {
+                   alert.close()
+               }
+           }
+           
+           alertView.showWarning("Delete Game", subTitle: "Are you sure you want to delete this game from your favorites?")
+       }
+       
     
     func didTappedİnfoButton(indexPath: IndexPath) {
         let vc = GameDetailViewController()
@@ -134,7 +149,7 @@ extension FavoriteController: FavoriteCollectionViewCellProtocol {
     }
     
     
-  
+    
     
     
 }
